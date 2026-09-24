@@ -30,19 +30,19 @@ const NAV_SECTIONS = [
   {
     title: "Main",
     items: [
-      { to: "/destinations", label: "Destinations", icon: MapPinned },
-      { to: "/categories", label: "Categories", icon: Tags },
-      { to: "/guidelines", label: "Guidelines", icon: FileText },
-      { to: "/hotels", label: "Hotels", icon: Hotel },
-      { to: "/itineraries", label: "Itineraries", icon: NotebookTabs },
-      { to: "/resources", label: "Resources", icon: BookOpenText },
-      { to: "/gallery", label: "Gallery", icon: Images },
-      {
-        label: "Dashboard",
-        path: "/dashboard",
-        icon: LayoutDashboard,
-      },
-    ],
+  // { path: "/destinations", label: "Destinations", icon: MapPinned },
+  { path: "/categories", label: "Categories", icon: Tags },
+  { path: "/guidelines", label: "Guidelines", icon: FileText },
+  { path: "/hotels", label: "Hotels", icon: Hotel },
+  // { path: "/itineraries", label: "Itineraries", icon: NotebookTabs },
+  // { path: "/resources", label: "Resources", icon: BookOpenText },
+  // { path: "/gallery", label: "Gallery", icon: Images },
+  {
+    label: "Dashboard",
+    path: "/dashboard",
+    icon: LayoutDashboard,
+  },
+],
   },
   {
     title: "Content",
