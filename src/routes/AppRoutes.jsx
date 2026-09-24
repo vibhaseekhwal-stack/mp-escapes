@@ -41,7 +41,9 @@ import EditAdmin from "../pages/AdminUsers/EditAdmin.jsx";
 import ViewAdmin from "../pages/AdminUsers/ViewAdmin.jsx";
 
 import Settings from "../pages/Settings/Settings.jsx";
-
+import Downloads from "../pages/Category/Category.jsx";
+import Guidelines from "../pages/Guidelines/Guidelines.jsx";
+import Hotels from "../pages/Hotels/Hotels.jsx";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -92,6 +94,9 @@ export default function AppRoutes() {
         <Route path="/admin-users/view/:id" element={<ViewAdmin />} />
 
         <Route path="/settings" element={<Settings />} />
+        <Route path="/categories" element={<Downloads />} />
+        <Route path="/guidelines" element={<Guidelines />} />
+        <Route path="/hotels" element={<Hotels />} />
       </Route>
 
       <Route path="/" element={<Navigate to="/dashboard" replace />} />

@@ -2,6 +2,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   MapPinned,
+  Tags,
+  FileText,
+  Hotel,
   NotebookTabs,
   BookOpenText,
   Images,
@@ -26,6 +29,9 @@ const NAV_SECTIONS = [
     label: "Content",
     items: [
       { to: "/destinations", label: "Destinations", icon: MapPinned },
+      { to: "/categories", label: "Categories", icon: Tags },
+      { to: "/guidelines", label: "Guidelines", icon: FileText },
+      { to: "/hotels", label: "Hotels", icon: Hotel },
       { to: "/itineraries", label: "Itineraries", icon: NotebookTabs },
       { to: "/resources", label: "Resources", icon: BookOpenText },
       { to: "/gallery", label: "Gallery", icon: Images },
@@ -49,7 +55,12 @@ const NAV_SECTIONS = [
   },
 ];
 
-export default function Sidebar({ mobileOpen, onCloseMobile, collapsed, onToggleCollapse }) {
+export default function Sidebar({
+  mobileOpen,
+  onCloseMobile,
+  collapsed,
+  onToggleCollapse,
+}) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -145,7 +156,11 @@ export default function Sidebar({ mobileOpen, onCloseMobile, collapsed, onToggle
             onClick={onToggleCollapse}
             className="mt-1 hidden w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-white/50 transition-colors hover:bg-white/[0.05] hover:text-white lg:flex"
           >
-            {collapsed ? <ChevronsRight size={18} /> : <ChevronsLeft size={18} />}
+            {collapsed ? (
+              <ChevronsRight size={18} />
+            ) : (
+              <ChevronsLeft size={18} />
+            )}
             {!collapsed && <span>Collapse</span>}
           </button>
         </div>
