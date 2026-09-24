@@ -12,21 +12,24 @@ import {
   EyeOff,
   ArrowRight,
   AlertCircle,
+  User,
+  ImagePlus,
+  CheckCircle2,
 } from "lucide-react";
 import Button from "../../components/Button/Button.jsx";
 
-const API_URL = "https://mp-escapes.onrender.com/api/admin/login";
+const API_URL = "https://mp-escapes.onrender.com/api/admin/register";
 
 const FEATURES = [
   {
     icon: ShieldCheck,
-    title: "Secure Access",
-    desc: "Role-based & encrypted",
+    title: "Secure Registration",
+    desc: "Protected admin access",
   },
   {
     icon: Waypoints,
-    title: "Live Itinerary Sync",
-    desc: "Real-time content updates",
+    title: "Unified Control",
+    desc: "Manage your platform",
   },
 ];
 
@@ -55,74 +58,95 @@ const itemVariants = {
   },
 };
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [form, setForm] = useState({
-    email: "admins@example.com",
+    name: "",
+    email: "",
     password: "",
+    confirmPassword: "",
+    avatar: null,
   });
 
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  const [keepSignedIn, setKeepSignedIn] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
-    if (!form.email.trim() || !form.password) {
-      setError("Please enter both email and password.");
+    if (!form.name.trim()) {
+      setError("Please enter your name.");
+      return;
+    }
+
+    if (!form.email.trim()) {
+      setError("Please enter your email address.");
+      return;
+    }
+
+    if (!form.password) {
+      setError("Please enter your password.");
+      return;
+    }
+
+    if (form.password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+
+    if (form.password !== form.confirmPassword) {
+      setError("Passwords do not match.");
       return;
     }
 
     setLoading(true);
 
     try {
+      const formData = new FormData();
+
+      formData.append("name", form.name.trim());
+      formData.append("email", form.email.trim());
+      formData.append("password", form.password);
+
+      if (form.avatar) {
+        formData.append("avatar", form.avatar);
+      }
+
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: form.email.trim(),
-          password: form.password,
-        }),
+        body: formData,
       });
 
       const data = await response.json();
 
       if (!response.ok || !data.success) {
         throw new Error(
-          data?.message || "Invalid email or password. Please try again."
+          data?.message || "Unable to register admin account."
         );
       }
 
-      if (!data.token) {
-        throw new Error(
-          "Login successful, but authentication token was not received."
-        );
-      }
+      setSuccess(
+        data.message || "Admin registered successfully."
+      );
 
-      localStorage.setItem("mp_escapes_auth", "true");
-      localStorage.setItem("mp_escapes_token", data.token);
+      setForm({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        avatar: null,
+      });
 
-      if (data.admin) {
-        localStorage.setItem(
-          "mp_escapes_admin",
-          JSON.stringify(data.admin)
-        );
-      }
-
-      if (keepSignedIn) {
-        localStorage.setItem("mp_escapes_keep_signed_in", "true");
-      } else {
-        localStorage.removeItem("mp_escapes_keep_signed_in");
-      }
-
-      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
     } catch (err) {
       setError(
         err?.message ||
@@ -262,7 +286,10 @@ export default function Login() {
                 rotate: -8,
                 scale: 1.08,
               }}
-              transition={{ type: "spring", stiffness: 300 }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+              }}
               className="flex h-11 w-11 items-center justify-center rounded-xl border border-gold/30 bg-gold/10 text-gold shadow-[0_0_0_1px_rgba(201,162,39,0.08)]"
             >
               <Compass size={22} strokeWidth={1.8} />
@@ -290,7 +317,7 @@ export default function Login() {
           >
             <div className="flex items-center justify-between">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/50">
-                System Status
+                Registration
               </p>
 
               <span className="relative flex h-2.5 w-2.5">
@@ -327,7 +354,10 @@ export default function Login() {
                   className="flex items-center gap-3 rounded-xl border border-white/5 bg-white/[0.02] p-3"
                 >
                   <motion.div
-                    whileHover={{ rotate: 8, scale: 1.08 }}
+                    whileHover={{
+                      rotate: 8,
+                      scale: 1.08,
+                    }}
                     className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gold/10 text-gold"
                   >
                     <f.icon size={17} strokeWidth={1.8} />
@@ -400,13 +430,13 @@ export default function Login() {
             className="relative mt-10"
           >
             <h2 className="font-display text-3xl font-semibold leading-snug">
-              Admin Console
+              Create Admin Account
             </h2>
 
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/50">
-              Access the unified tourism control center. Curate destinations,
-              manage itineraries, and monitor visitor activity across Madhya
-              Pradesh — all from one refined workspace.
+              Set up a secure administrator account to access
+              the MP Escapes control center and manage your
+              tourism platform.
             </p>
           </motion.div>
         </motion.div>
@@ -424,11 +454,17 @@ export default function Login() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
-            className="mb-8 flex items-center gap-3 lg:hidden"
+            transition={{
+              duration: 0.5,
+              delay: 0.35,
+            }}
+            className="mb-7 flex items-center gap-3 lg:hidden"
           >
             <motion.div
-              whileHover={{ rotate: -8, scale: 1.06 }}
+              whileHover={{
+                rotate: -8,
+                scale: 1.06,
+              }}
               className="flex h-10 w-10 items-center justify-center rounded-lg bg-black text-gold"
             >
               <Compass size={20} strokeWidth={1.8} />
@@ -442,37 +478,115 @@ export default function Login() {
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.4 }}
+            transition={{
+              duration: 0.55,
+              delay: 0.4,
+            }}
             className="font-display text-3xl font-semibold text-ink sm:text-[2.1rem]"
           >
-            Welcome back
+            Create account
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.48 }}
+            transition={{
+              duration: 0.5,
+              delay: 0.48,
+            }}
             className="mt-2 text-sm text-muted"
           >
-            Enter your credentials to manage the platform operations.
+            Register a new administrator for MP Escapes.
           </motion.p>
 
-          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+          <form
+            onSubmit={handleSubmit}
+            className="mt-7 space-y-4"
+          >
             {error && (
               <motion.div
-                initial={{ opacity: 0, y: -10, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{
+                  opacity: 0,
+                  y: -10,
+                  scale: 0.98,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                }}
                 className="flex items-center gap-2.5 rounded-xl border border-danger/15 bg-danger/5 px-4 py-3 text-sm text-danger"
               >
-                <AlertCircle size={16} className="shrink-0" />
+                <AlertCircle
+                  size={16}
+                  className="shrink-0"
+                />
                 {error}
+              </motion.div>
+            )}
+
+            {success && (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: -10,
+                  scale: 0.98,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                }}
+                className="flex items-center gap-2.5 rounded-xl border border-emerald-500/15 bg-emerald-500/5 px-4 py-3 text-sm text-emerald-600"
+              >
+                <CheckCircle2
+                  size={16}
+                  className="shrink-0"
+                />
+                {success}
               </motion.div>
             )}
 
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.55 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.53,
+              }}
+            >
+              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">
+                Full name
+              </label>
+
+              <div className="group relative">
+                <User
+                  size={16}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted transition-colors group-focus-within:text-gold"
+                />
+
+                <input
+                  type="text"
+                  className="w-full rounded-xl border border-line bg-surface py-3 pl-10 pr-4 text-sm text-ink outline-none transition-all duration-200 focus:border-gold focus:bg-white focus:ring-4 focus:ring-gold/10"
+                  placeholder="Supers Admin"
+                  value={form.name}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      name: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.59,
+              }}
             >
               <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">
                 Email address
@@ -502,21 +616,14 @@ export default function Login() {
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.62 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.65,
+              }}
             >
-              <div className="mb-1.5 flex items-center justify-between">
-                <label className="text-xs font-semibold uppercase tracking-wide text-muted">
-                  Password
-                </label>
-
-                <motion.a
-                  href="#"
-                  whileHover={{ x: -2 }}
-                  className="text-xs font-medium text-gold hover:text-gold-hover"
-                >
-                  Forgot password?
-                </motion.a>
-              </div>
+              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">
+                Password
+              </label>
 
               <div className="group relative">
                 <Lock
@@ -525,9 +632,11 @@ export default function Login() {
                 />
 
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={
+                    showPassword ? "text" : "password"
+                  }
                   className="w-full rounded-xl border border-line bg-surface py-3 pl-10 pr-11 text-sm text-ink outline-none transition-all duration-200 focus:border-gold focus:bg-white focus:ring-4 focus:ring-gold/10"
-                  placeholder="Enter your password"
+                  placeholder="Create password"
                   value={form.password}
                   onChange={(e) =>
                     setForm({
@@ -554,34 +663,115 @@ export default function Login() {
               </div>
             </motion.div>
 
-            <motion.label
-              initial={{ opacity: 0, y: 10 }}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.69 }}
-              className="flex cursor-pointer items-center gap-2.5 text-sm text-muted"
+              transition={{
+                duration: 0.5,
+                delay: 0.71,
+              }}
             >
-              <input
-                type="checkbox"
-                checked={keepSignedIn}
-                onChange={(e) =>
-                  setKeepSignedIn(e.target.checked)
-                }
-                className="h-4 w-4 rounded border-line accent-gold"
-              />
+              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">
+                Confirm password
+              </label>
 
-              Keep me signed in
-            </motion.label>
+              <div className="group relative">
+                <Lock
+                  size={16}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted transition-colors group-focus-within:text-gold"
+                />
+
+                <input
+                  type={
+                    showConfirmPassword
+                      ? "text"
+                      : "password"
+                  }
+                  className="w-full rounded-xl border border-line bg-surface py-3 pl-10 pr-11 text-sm text-ink outline-none transition-all duration-200 focus:border-gold focus:bg-white focus:ring-4 focus:ring-gold/10"
+                  placeholder="Confirm password"
+                  value={form.confirmPassword}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      confirmPassword: e.target.value,
+                    })
+                  }
+                />
+
+                <motion.button
+                  type="button"
+                  whileTap={{ scale: 0.85 }}
+                  onClick={() =>
+                    setShowConfirmPassword((s) => !s)
+                  }
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted hover:text-ink"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={16} />
+                  ) : (
+                    <Eye size={16} />
+                  )}
+                </motion.button>
+              </div>
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.76 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.77,
+              }}
+            >
+              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">
+                Avatar
+              </label>
+
+              <label className="group flex cursor-pointer items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3 transition-all duration-200 hover:border-gold hover:bg-white">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gold/10 text-gold">
+                  <ImagePlus size={17} />
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm text-ink">
+                    {form.avatar
+                      ? form.avatar.name
+                      : "Choose avatar image"}
+                  </p>
+
+                  <p className="mt-0.5 text-[11px] text-muted">
+                    Optional
+                  </p>
+                </div>
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      avatar:
+                        e.target.files?.[0] || null,
+                    })
+                  }
+                />
+              </label>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.83,
+              }}
             >
               <Button
                 type="submit"
                 variant="gold"
                 disabled={loading}
-                className="group w-full !py-3.5 text-sm shadow-[0_10px_24px_-8px_rgba(201,162,39,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-10px_rgba(201,162,39,0.65)] active:translate-y-0"
+                className="group mt-1 w-full !py-3.5 text-sm shadow-[0_10px_24px_-8px_rgba(201,162,39,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-10px_rgba(201,162,39,0.65)] active:translate-y-0"
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -594,13 +784,11 @@ export default function Login() {
                       }}
                       className="block h-4 w-4 rounded-full border-2 border-black/30 border-t-black"
                     />
-
-                    Signing in…
+                    Creating Account…
                   </span>
                 ) : (
                   <>
-                    Sign In to Dashboard
-
+                    Create Admin Account
                     <ArrowRight
                       size={16}
                       className="transition-transform duration-200 group-hover:translate-x-1"
@@ -611,26 +799,35 @@ export default function Login() {
             </motion.div>
           </form>
 
-          <motion.div
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
-            className="mt-8 text-center"
+            transition={{
+              duration: 0.6,
+              delay: 0.95,
+            }}
+            className="mt-6 text-center text-xs text-muted"
           >
-            <p className="text-xs text-muted">
-              Don't have an admin account?{" "}
-              <Link
-                to="/register"
-                className="font-semibold text-gold transition-colors hover:text-gold-hover"
-              >
-                Create account
-              </Link>
-            </p>
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="font-semibold text-gold transition-colors hover:text-gold-hover"
+            >
+              Sign in
+            </Link>
+          </motion.p>
 
-            <p className="mt-3 text-xs text-muted">
-              Secure admin access for MP Escapes.
-            </p>
-          </motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.6,
+              delay: 1.05,
+            }}
+            className="mt-4 text-center text-xs text-muted"
+          >
+            Secure admin access for MP Escapes.
+          </motion.p>
         </motion.div>
       </motion.div>
     </div>
