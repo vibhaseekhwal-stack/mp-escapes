@@ -20,6 +20,25 @@ export const adminLogin = async (credentials) => {
   return data;
 };
 
+export const adminRegister = async (registerData) => {
+  const formData = new FormData();
+
+  formData.append("name", registerData.name);
+  formData.append("email", registerData.email);
+  formData.append("password", registerData.password);
+
+  if (registerData.avatar) {
+    formData.append("avatar", registerData.avatar);
+  }
+
+  const response = await axiosInstance.post(
+    "/admin/register",
+    formData
+  );
+
+  return response.data;
+};
+
 export const getAdminProfile = async () => {
   const response = await axiosInstance.get("/admin/profile");
   return response.data;
@@ -27,14 +46,13 @@ export const getAdminProfile = async () => {
 
 export const adminLogout = async () => {
   try {
-    await axiosInstance.post("/admin/logout");
+    const response = await axiosInstance.post("/admin/logout");
+    return response.data;
   } finally {
     localStorage.removeItem("mp_escapes_auth");
     localStorage.removeItem("mp_escapes_token");
     localStorage.removeItem("mp_escapes_admin");
     localStorage.removeItem("mp_escapes_keep_signed_in");
-
-    window.location.href = "/login";
   }
 };
 

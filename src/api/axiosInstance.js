@@ -24,7 +24,13 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const requestUrl = error.config?.url || "";
+
+    if (
+      error.response?.status === 401 &&
+      !requestUrl.includes("/admin/login") &&
+      !requestUrl.includes("/admin/logout")
+    ) {
       localStorage.removeItem("mp_escapes_auth");
       localStorage.removeItem("mp_escapes_token");
       localStorage.removeItem("mp_escapes_admin");
