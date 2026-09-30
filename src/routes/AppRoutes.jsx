@@ -37,11 +37,13 @@ import QRPreview from "../pages/QRManagement/QRPreview.jsx";
 
 import AdminUsers from "../pages/AdminUsers/AdminUsers.jsx";
 
-
 import Settings from "../pages/Settings/Settings.jsx";
 import Downloads from "../pages/Category/Category.jsx";
 import Guidelines from "../pages/Guidelines/Guidelines.jsx";
 import Hotels from "../pages/Hotels/Hotels.jsx";
+import ImageBank from "../pages/ImageBank/ImageBank.jsx";
+import { Maps } from "../pages/Maps/Maps.jsx";
+import { Media } from "../pages/Media/Media.jsx";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -62,89 +64,48 @@ export default function AppRoutes() {
 
         <Route path="/destinations" element={<Destinations />} />
         <Route path="/destinations/add" element={<Destinations />} />
-        <Route
-          path="/destinations/edit/:id"
-          element={<Destinations />}
-        />
-        <Route
-          path="/destinations/view/:id"
-          element={<Destinations />}
-        />
+        <Route path="/destinations/edit/:id" element={<Destinations />} />
+        <Route path="/destinations/view/:id" element={<Destinations />} />
 
         <Route path="/itineraries" element={<Itineraries />} />
         <Route path="/itineraries/add" element={<AddItinerary />} />
-        <Route
-          path="/itineraries/edit/:id"
-          element={<EditItinerary />}
-        />
-        <Route
-          path="/itineraries/view/:id"
-          element={<ViewItinerary />}
-        />
+        <Route path="/itineraries/edit/:id" element={<EditItinerary />} />
+        <Route path="/itineraries/view/:id" element={<ViewItinerary />} />
 
         <Route path="/resources" element={<Resources />} />
         <Route path="/resources/add" element={<AddResource />} />
-        <Route
-          path="/resources/edit/:id"
-          element={<EditResource />}
-        />
-        <Route
-          path="/resources/view/:id"
-          element={<ViewResource />}
-        />
+        <Route path="/resources/edit/:id" element={<EditResource />} />
+        <Route path="/resources/view/:id" element={<ViewResource />} />
 
-        <Route
-          path="/dos-donts"
-          element={<DosDontsPage />}
-        />
+        <Route path="/dos-donts" element={<DosDontsPage />} />
 
         <Route path="/gallery" element={<Gallery />} />
 
         <Route path="/travel-info" element={<TravelInfo />} />
-        <Route
-          path="/travel-info/edit/:section"
-          element={<EditTravelInfo />}
-        />
+        <Route path="/travel-info/edit/:section" element={<EditTravelInfo />} />
 
         <Route path="/contact" element={<Contact />} />
-        <Route
-          path="/contact/edit"
-          element={<EditContact />}
-        />
+        <Route path="/contact/edit" element={<EditContact />} />
 
         <Route path="/analytics" element={<Analytics />} />
 
-        <Route
-          path="/qr-management"
-          element={<QRManagement />}
-        />
-        <Route
-          path="/qr-management/preview/:id"
-          element={<QRPreview />}
-        />
+        <Route path="/qr-management" element={<QRManagement />} />
+        <Route path="/qr-management/preview/:id" element={<QRPreview />} />
 
-        <Route
-          path="/admin-users"
-          element={<AdminUsers />}
-        />
-      
-        
+        <Route path="/admin-users" element={<AdminUsers />} />
 
         <Route path="/settings" element={<Settings />} />
         <Route path="/categories" element={<Downloads />} />
         <Route path="/guidelines" element={<Guidelines />} />
         <Route path="/hotels" element={<Hotels />} />
+        <Route path="/image-bank" element={<ImageBank />} />
+        <Route path="/maps" element={<Maps />} />
+        <Route path="/media" element={<Media />} />
       </Route>
 
-      <Route
-        path="/"
-        element={<Navigate to="/dashboard" replace />}
-      />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-      <Route
-        path="*"
-        element={<Navigate to="/dashboard" replace />}
-      />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }

@@ -2,12 +2,12 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
-  MapPinned,
   Tags,
   FileText,
   Hotel,
-  NotebookTabs,
-  BookOpenText,
+  Film,
+  
+  Image,
   Map,
   Route,
   BookOpen,
@@ -30,19 +30,26 @@ const NAV_SECTIONS = [
   {
     title: "Main",
     items: [
-  // { path: "/destinations", label: "Destinations", icon: MapPinned },
-  { path: "/categories", label: "Categories", icon: Tags },
-  { path: "/guidelines", label: "Guidelines", icon: FileText },
-  { path: "/hotels", label: "Hotels", icon: Hotel },
-  // { path: "/itineraries", label: "Itineraries", icon: NotebookTabs },
-  // { path: "/resources", label: "Resources", icon: BookOpenText },
-  // { path: "/gallery", label: "Gallery", icon: Images },
-  {
-    label: "Dashboard",
-    path: "/dashboard",
-    icon: LayoutDashboard,
-  },
-],
+      {
+        label: "Dashboard",
+        path: "/dashboard",
+        icon: LayoutDashboard,
+      },
+      { path: "/categories", label: "Categories", icon: Tags },
+      { path: "/guidelines", label: "Guidelines", icon: FileText },
+      { path: "/hotels", label: "Hotels", icon: Hotel },
+      {
+        path: "/image-bank",
+        label: "Image Bank",
+        icon: Image,
+      },
+     { path: "/maps", label: "Cities Maps", icon: Map },
+     {
+  path: "/media",
+  label: "Media",
+  icon: Film,
+},
+    ],
   },
   {
     title: "Content",
@@ -57,11 +64,11 @@ const NAV_SECTIONS = [
         path: "/destinations",
         icon: Map,
       },
-      {
-        label: "Itineraries",
-        path: "/itineraries",
-        icon: Route,
-      },
+      // {
+      //   label: "Itineraries",
+      //   path: "/itineraries",
+      //   icon: Route,
+      // },
       {
         label: "Resources",
         path: "/resources",
@@ -142,10 +149,7 @@ export default function Sidebar({
         console.log(data.message);
       }
     } catch (error) {
-      console.error(
-        "Logout API error:",
-        error.response?.data || error.message
-      );
+      console.error("Logout API error:", error.response?.data || error.message);
     } finally {
       localStorage.removeItem("mp_escapes_auth");
       localStorage.removeItem("mp_escapes_token");
@@ -172,9 +176,7 @@ export default function Sidebar({
 
       <aside
         className={`fixed left-0 top-0 z-50 flex h-screen w-[260px] flex-col border-r border-white/10 bg-[#0d0d0d] text-white shadow-2xl transition-transform duration-300 ${
-          mobileOpen
-            ? "translate-x-0"
-            : "-translate-x-full lg:translate-x-0"
+          mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
         <div className="flex h-[76px] items-center justify-between border-b border-white/10 px-4">
@@ -239,9 +241,7 @@ export default function Sidebar({
                             className="shrink-0"
                           />
 
-                          <span className="truncate">
-                            {item.label}
-                          </span>
+                          <span className="truncate">{item.label}</span>
                         </>
                       )}
                     </NavLink>
@@ -265,9 +265,7 @@ export default function Sidebar({
               className={loggingOut ? "animate-pulse" : ""}
             />
 
-            <span>
-              {loggingOut ? "Logging out..." : "Logout"}
-            </span>
+            <span>{loggingOut ? "Logging out..." : "Logout"}</span>
           </button>
         </div>
       </aside>

@@ -1,27 +1,45 @@
-/* ============================================================
-   DOWNLOADS PAGE — ADMIN PANEL STYLE
-   Primary color: Indigo (#4f46e5) — change --primary below
-   to match your brand instantly.
-   ============================================================ */
-
 :root {
-  --primary: #4f46e5;
-  --primary-light: #eef2ff;
-  --primary-dark: #4338ca;
+  --primary: #f5b400;
+  --primary-light: #fff6df;
+  --primary-dark: #d99900;
+  --yellow: #fbbf24;
+  --yellow-soft: #ffe4a3;
+  --blue: #3b82f6;
+  --purple: #8b5cf6;
   --text-main: #1e1e2d;
   --text-muted: #6b7280;
-  --border-color: #e5e7eb;
-  --bg-page: #f5f6fa;
+  --border-color: #e6e8ee;
+  --bg-page: #f9fafc;
   --bg-card: #ffffff;
+  --bg-card-alt: #fbfbfd;
   --success: #16a34a;
   --danger: #dc2626;
   --radius: 14px;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 1px 3px rgba(30, 30, 45, 0.06);
+  --shadow-md: 0 8px 24px rgba(30, 30, 45, 0.09);
+
+  --grad-yellow: linear-gradient(135deg, #ffd766 0%, #f5b400 55%, #d99900 100%);
+  --grad-yellow-hover: linear-gradient(135deg, #ffe08a 0%, #ffc419 55%, #e6a600 100%);
+  --grad-bluepurple: linear-gradient(135deg, #3b82f6 0%, #7c6ff0 50%, #8b5cf6 100%);
+  --grad-bluepurple-hover: linear-gradient(135deg, #5b95ff 0%, #8f83f5 50%, #a06af7 100%);
+  --grad-danger: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+  --shadow-glow-yellow: 0 8px 22px rgba(245, 180, 0, 0.28);
+  --shadow-glow-bluepurple: 0 8px 24px rgba(124, 111, 240, 0.32);
 }
 
 * {
   box-sizing: border-box;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .downloads-page {
@@ -30,50 +48,105 @@
   padding: 32px;
   font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
   color: var(--text-main);
+  animation: pageFadeIn 0.5s ease both;
 }
 
-/* ================= HEADER ================= */
 .downloads-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 24px;
+  align-items: center;
+  margin-bottom: 28px;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 16px;
+
+  background: linear-gradient(135deg, #ffffff 0%, #fffaf0 100%);
+  border: 1px solid #e9e5d8;
+  border-radius: 16px;
+  padding: 22px 26px;
+
+  box-shadow: 0 8px 25px rgba(31, 41, 55, 0.08);
+
+  position: relative;
+  overflow: hidden;
+}
+.downloads-header::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: var(--grad-yellow);
+  border-radius: 50%;
+  opacity: 0.18;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.downloads-header::after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  left: 40%;
+  width: 140px;
+  height: 140px;
+  background: var(--grad-bluepurple);
+  border-radius: 50%;
+  opacity: 0.12;
+  filter: blur(2px);
+  pointer-events: none;
 }
 
 .downloads-header h2 {
-  margin: 0 0 4px 0;
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
+  margin: 0 0 6px 0;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: var(--grad-yellow);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--primary-dark);
+  display: inline-block;
+  position: relative;
+  z-index: 1;
 }
 
 .downloads-header p {
   margin: 0;
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: 15px;
+  position: relative;
+  z-index: 1;
 }
 
 .refresh-btn {
-  background: var(--primary);
-  color: #fff;
+  background: var(--grad-bluepurple);
+  color: #ffffff;
   border: none;
   padding: 10px 20px;
   border-radius: 10px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: background 0.2s ease, transform 0.15s ease;
+  transition: background 0.35s ease, transform 0.15s ease, box-shadow 0.25s ease;
   box-shadow: var(--shadow-sm);
+  background-size: 160% 160%;
+  background-position: 0% 50%;
 }
 
 .refresh-btn:hover:not(:disabled) {
-  background: var(--primary-dark);
-  transform: translateY(-1px);
+  background: var(--grad-bluepurple-hover);
+  background-position: 100% 50%;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow-bluepurple);
+}
+
+.refresh-btn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .refresh-btn:disabled {
@@ -81,7 +154,6 @@
   cursor: not-allowed;
 }
 
-/* ================= STATS ================= */
 .download-stats {
   display: flex;
   gap: 16px;
@@ -100,19 +172,32 @@
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-color);
   flex: 1;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
 }
 
 .stat-icon {
   width: 46px;
   height: 46px;
   border-radius: 12px;
-  background: var(--primary-light);
-  color: var(--primary);
+  background: var(--grad-yellow);
+  color: #6b4a00;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(245, 180, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+  transform: scale(1.08) rotate(-4deg);
 }
 
 .stat-card span {
@@ -127,9 +212,15 @@
   margin: 0;
   font-size: 22px;
   font-weight: 700;
+  color: var(--text-main) !important;
 }
 
-/* ================= ERROR ================= */
+@keyframes shakeIn {
+  0% { opacity: 0; transform: translateX(-6px); }
+  50% { transform: translateX(4px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
 .error-message {
   background: #fef2f2;
   color: var(--danger);
@@ -139,20 +230,22 @@
   margin-bottom: 20px;
   font-size: 14px;
   font-weight: 500;
+  animation: shakeIn 0.35s ease;
 }
 
-/* ================= MAIN CARD WRAPPER ================= */
 .table-card {
   background: var(--bg-card);
   border-radius: var(--radius);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
-  /* Enables container-based responsiveness below,
-     so layout reacts to the CARD's own width,
-     not just the browser window width. */
   container-type: inline-size;
   container-name: table-card;
+  transition: box-shadow 0.3s ease;
+}
+
+.table-card:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .table-top {
@@ -167,14 +260,15 @@
 
 .table-top h3 {
   margin: 0 0 2px 0;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 700;
+  color: var(--text-main) !important;
 }
 
 .table-top p {
   margin: 0;
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--text-muted) !important;
 }
 
 .search-input {
@@ -184,8 +278,13 @@
   font-size: 13.5px;
   width: 240px;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
   background: var(--bg-page);
+  color: var(--text-main);
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
 }
 
 .search-input:focus {
@@ -194,7 +293,6 @@
   background: #fff;
 }
 
-/* ================= LOADING / EMPTY ================= */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -211,6 +309,7 @@
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 12px;
+  box-shadow: 0 0 12px rgba(245, 180, 0, 0.3);
 }
 
 @keyframes spin {
@@ -223,19 +322,26 @@
   text-align: center;
   padding: 60px 20px;
   color: var(--text-muted);
+  animation: pageFadeIn 0.4s ease both;
 }
 
 .empty-icon {
   font-size: 42px;
   margin-bottom: 10px;
+  display: inline-block;
+  animation: floatIcon 2.6s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 .empty-state h3 {
   margin: 0 0 4px 0;
-  color: var(--text-main);
+  color: var(--text-main) !important;
 }
 
-/* ================= ACCORDION LIST ================= */
 .accordion-list {
   display: flex;
   flex-direction: column;
@@ -243,7 +349,7 @@
 
 .category-card {
   border-bottom: 1px solid var(--border-color);
-  transition: background 0.2s ease;
+  transition: background 0.3s ease;
 }
 
 .category-card:last-child {
@@ -251,10 +357,9 @@
 }
 
 .category-card.open {
-  background: #fafaff;
+  background: var(--primary-light);
 }
 
-/* ---- CATEGORY HEADER (clickable row) ---- */
 .category-header {
   width: 100%;
   background: transparent;
@@ -265,7 +370,7 @@
   padding: 18px 24px;
   cursor: pointer;
   text-align: left;
-  transition: background 0.2s ease;
+  transition: background 0.25s ease;
 }
 
 .category-header:hover {
@@ -282,52 +387,59 @@
   width: 42px;
   height: 42px;
   border-radius: 10px;
-  background: var(--primary-light);
-  color: var(--primary);
+  background: var(--grad-yellow);
+  color: #6b4a00;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 19px;
   flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 3px 10px rgba(245, 180, 0, 0.25);
+}
+
+.category-card.open .category-icon {
+  transform: rotate(-6deg) scale(1.05);
+  box-shadow: var(--shadow-glow-yellow);
 }
 
 .category-header strong {
   display: block;
   font-size: 15px;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-main) !important;
 }
 
 .category-header small {
   display: block;
   font-size: 12.5px;
-  color: var(--text-muted);
+  color: var(--text-muted) !important;
   margin-top: 2px;
 }
 
 .chevron {
-  color: var(--primary);
+  color: var(--primary-dark);
   font-size: 12px;
-  transition: transform 0.25s ease;
+  transition: transform 0.3s ease;
+  display: inline-block;
 }
 
 .category-card.open .chevron {
   transform: rotate(180deg);
 }
 
-/* ---- FILE LIST ---- */
 .file-list {
   padding: 4px 24px 16px 24px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  animation: fadeSlide 0.2s ease;
+  animation: fadeSlide 0.25s ease;
 }
 
 @keyframes fadeSlide {
   from {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
@@ -344,16 +456,15 @@
   border-radius: 10px;
   padding: 12px 16px;
   margin-left: 56px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  /* FIX: allow name + buttons to wrap instead of overlapping
-     when the card/container is narrow */
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
   flex-wrap: wrap;
   gap: 10px;
 }
 
 .file-row:hover {
   border-color: var(--primary);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .file-name {
@@ -362,11 +473,14 @@
   gap: 10px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-main);
+  color: var(--text-main) !important;
   overflow: hidden;
-  /* FIX: let this shrink/grow instead of forcing buttons to squeeze */
   flex: 1 1 auto;
   min-width: 0;
+}
+
+.file-name span {
+  color: var(--text-main) !important;
 }
 
 .file-name span:last-child {
@@ -379,23 +493,25 @@
 .pdf-icon {
   font-size: 16px;
   flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.file-row:hover .pdf-icon {
+  transform: scale(1.15);
 }
 
 .no-file {
-  color: var(--text-muted);
+  color: var(--text-muted) !important;
   font-size: 13.5px;
   font-style: italic;
   padding: 8px 0;
   margin-left: 56px;
 }
 
-/* ---- ACTION BUTTONS ---- */
 .action-buttons {
   display: flex;
   gap: 8px;
   flex-shrink: 0;
-  /* FIX: wrap buttons onto a second line in tight spaces
-     instead of squeezing/overlapping them */
   flex-wrap: wrap;
   justify-content: flex-end;
 }
@@ -408,35 +524,45 @@
   gap: 5px;
   border: 1px solid var(--border-color);
   background: #fff;
-  /* FIX: slightly tighter padding/font so 3 buttons fit
-     comfortably in narrow containers */
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   white-space: nowrap;
 }
 
+.view-btn:active,
+.download-btn:active,
+.delete-btn:active {
+  transform: scale(0.94);
+}
+
 .view-btn {
-  color: var(--primary);
-  border-color: var(--primary-light);
+  color: var(--purple);
+  border-color: #ece7fc;
 }
 
 .view-btn:hover {
-  background: var(--primary-light);
-  border-color: var(--primary);
+  background: var(--grad-bluepurple);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 10px rgba(124, 111, 240, 0.3);
+  transform: translateY(-1px);
 }
 
 .download-btn {
   color: #fff;
-  background: var(--primary);
-  border-color: var(--primary);
+  background: var(--grad-bluepurple);
+  border-color: transparent;
+  box-shadow: 0 2px 6px rgba(124, 111, 240, 0.25);
 }
 
 .download-btn:hover {
-  background: var(--primary-dark);
+  background: var(--grad-bluepurple-hover);
+  box-shadow: 0 4px 12px rgba(124, 111, 240, 0.38);
+  transform: translateY(-1px);
 }
 
 .delete-btn {
@@ -444,8 +570,11 @@
 }
 
 .delete-btn:hover {
-  background: #fef2f2 !important;
-  border-color: #fecaca !important;
+  background: var(--grad-danger) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.28);
+  transform: translateY(-1px);
 }
 
 @container table-card (max-width: 600px) {
@@ -465,7 +594,6 @@
   }
 }
 
-/* ================= RESPONSIVE (WINDOW WIDTH) ================= */
 @media (max-width: 640px) {
   .downloads-page {
     padding: 18px;
@@ -495,7 +623,22 @@
   }
 }
 
-/* ================= DELETE MODAL ================= */
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 .delete-modal-overlay {
   position: fixed;
   inset: 0;
@@ -504,6 +647,7 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  animation: overlayFadeIn 0.2s ease;
 }
 
 .delete-modal {
@@ -514,6 +658,7 @@
   padding: 28px;
   text-align: center;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+  animation: modalPopIn 0.25s ease;
 }
 
 .delete-modal-icon {
@@ -521,11 +666,13 @@
   height: 55px;
   margin: 0 auto 15px;
   border-radius: 50%;
-  background: #fef2f2;
+  background: var(--grad-danger);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3);
 }
 
 .delete-modal h3 {
@@ -554,6 +701,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 .cancel-delete-btn {
@@ -561,33 +709,62 @@
   color: #475569;
 }
 
+.cancel-delete-btn:hover {
+  background: #e2e8f0;
+  transform: translateY(-1px);
+}
+
 .confirm-delete-btn {
-  background: #dc2626;
+  background: var(--grad-danger);
   color: white;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.25);
 }
 
 .confirm-delete-btn:hover {
-  background: #b91c1c;
+  background: linear-gradient(135deg, #fb7185 0%, #b91c1c 100%);
+  box-shadow: 0 6px 14px rgba(220, 38, 38, 0.35);
+  transform: translateY(-1px);
 }
 
-/* ================= UPLOAD BUTTON ================= */
+.cancel-delete-btn:active,
+.confirm-delete-btn:active {
+  transform: scale(0.96);
+}
+
 .upload-file-btn {
   border: none;
-  background: #2563eb;
+  background: linear-gradient(135deg, #3b82f6 0%, #7c6ff0 45%, #8b5cf6 100%);
+  background-size: 180% 180%;
+  background-position: 0% 50%;
   color: #ffffff;
   padding: 10px 17px;
   border-radius: 8px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.35s ease;
   display: flex;
   align-items: center;
   gap: 6px;
+  box-shadow: 0 3px 10px rgba(124, 111, 240, 0.3);
 }
 
 .upload-file-btn:hover {
-  background: #1d4ed8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.18);
+  background-position: 100% 50%;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(124, 111, 240, 0.42);
+}
+
+.upload-file-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

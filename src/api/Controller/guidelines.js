@@ -37,3 +37,17 @@ export const createGuideline = async (formData) => {
     throw error;
   }
 };
+
+
+
+export const downloadGuidelineZip = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/guidelines/${id}/zip`, {
+      responseType: "blob",
+    });
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

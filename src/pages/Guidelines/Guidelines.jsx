@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
   getAllGuidelines,
   deleteGuideline,
+  downloadGuidelineZip,
 } from "../../api/Controller/guidelines";
-import "./Guidelines.css";
+import "./Guidelines.css";import { toast } from "react-toastify";
+import CommonLoader from "../../components/CommonLoader";
 import UploadGuideline from "./UploadGuideline/UploadGuideline";
 const Guidelines = () => {
   const [guidelines, setGuidelines] = useState([]);
@@ -13,6 +15,8 @@ const Guidelines = () => {
   const [deleteTarget, setDeleteTarget] = useState(null); // jis guideline ko delete karna hai
   const [deleting, setDeleting] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const [selectedGuideline, setSelectedGuideline] = useState(null);
   const fetchGuidelines = async () => {
     try {
       setLoading(true);
@@ -107,7 +111,40 @@ const Guidelines = () => {
     (sum, g) => sum + (g.docxFiles?.length || 0),
     0,
   );
+const handleGuidelineZipDownload = async () => {
+  if (!selectedGuideline) return;
 
+  try {
+    const response = await downloadGuidelineZip(selectedGuideline._id);
+
+    const blob = new Blob([response.data], {
+      type: "application/zip",
+    });
+
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${selectedGuideline.title}.zip`;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    window.URL.revokeObjectURL(url);
+
+    // Close modal
+    setShowDownloadModal(false);
+    setSelectedGuideline(null);
+
+    // Success message
+    toast.success("ZIP file downloaded successfully!");
+  } catch (error) {
+    console.error("ZIP download failed:", error);
+
+    toast.error("Failed to download ZIP file.");
+  }
+};
   return (
     <div className="guidelines-container">
       {/* ================= HEADER ================= */}
@@ -116,12 +153,28 @@ const Guidelines = () => {
           <h2>Guidelines</h2>
           <p>Manage all guidelines and related documents</p>
         </div>
-        <button
-          className="upload-guideline-btn"
-          onClick={() => setShowUploadModal(true)}
-        >
-          + Upload Guideline
-        </button>
+        <div className="header-buttons">
+          <button
+            className="download-zip-btn"
+            onClick={() => {
+              if (guidelines.length === 0) {
+                alert("No guidelines available to download.");
+                return;
+              }
+
+              setShowDownloadModal(true);
+            }}
+          >
+            ↓ Download ZIP
+          </button>
+
+          <button
+            className="upload-guideline-btn"
+            onClick={() => setShowUploadModal(true)}
+          >
+            + Upload Guideline
+          </button>
+        </div>
       </div>
 
       {/* ================= STATS ================= */}
@@ -172,10 +225,7 @@ const Guidelines = () => {
         </div>
 
         {loading ? (
-          <div className="loading">
-            <div className="loader"></div>
-            <p>Loading guidelines...</p>
-          </div>
+          <CommonLoader />
         ) : filteredGuidelines.length === 0 ? (
           <div className="no-data">
             <div className="empty-icon">📂</div>
@@ -391,7 +441,94 @@ const Guidelines = () => {
           </div>
         </div>
       )}
+    {showDownloadModal && (
+  <div
+    className="modal-overlay"
+    onClick={() => {
+      setShowDownloadModal(false);
+      setSelectedGuideline(null);
+    }}
+  >
+    <div
+      className="modal-box download-modal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="download-modal-header">
+        <div className="download-modal-icon">📦</div>
 
+        <div>
+          <h3>Download Guidelines</h3>
+          <p>Select a guideline to download its files as a ZIP.</p>
+        </div>
+      </div>
+
+      <div className="guideline-select-list">
+        {guidelines.map((guideline) => {
+          const totalFiles =
+            (guideline.pdfFiles?.length || 0) +
+            (guideline.docxFiles?.length || 0);
+
+          const isSelected =
+            selectedGuideline?._id === guideline._id;
+
+          return (
+            <button
+              key={guideline._id}
+              type="button"
+              className={`guideline-select-item ${
+                isSelected ? "selected" : ""
+              }`}
+              onClick={() => setSelectedGuideline(guideline)}
+            >
+              <div className="guideline-select-left">
+                <div className="guideline-select-icon">
+                  📄
+                </div>
+
+                <div className="guideline-select-info">
+                  <strong>{guideline.title}</strong>
+
+                  <span>
+                    {totalFiles}{" "}
+                    {totalFiles === 1 ? "file" : "files"}
+                  </span>
+                </div>
+              </div>
+
+              <div
+                className={`select-radio ${
+                  isSelected ? "checked" : ""
+                }`}
+              >
+                {isSelected && "✓"}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="modal-actions">
+        <button
+          className="modal-cancel"
+          onClick={() => {
+            setShowDownloadModal(false);
+            setSelectedGuideline(null);
+          }}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="download-confirm-btn"
+          disabled={!selectedGuideline}
+          onClick={handleGuidelineZipDownload}
+        >
+          ↓ Download ZIP
+        </button>
+      </div>
+    </div>
+  </div>
+)}
       {showUploadModal && (
         <UploadGuideline
           onClose={() => setShowUploadModal(false)}

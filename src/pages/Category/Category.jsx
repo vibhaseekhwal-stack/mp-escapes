@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Category.css";
-import { getDownloads , uploadDownloads,  deleteDownloadCategory,
- } from "../../api/Controller/category";
+import {
+  getDownloads,
+  uploadDownloads,
+  deleteDownloadCategory,
+} from "../../api/Controller/category";
+import CommonLoader from "../../components/CommonLoader";
 import UploadDownloadPopup from "./UploadFiles/UploadDownloadPopup";
 const Downloads = () => {
   const [downloads, setDownloads] = useState([]);
@@ -13,9 +17,9 @@ const Downloads = () => {
 
   // ✅ NEW STATE — search box ke liye (optional but useful)
   const [search, setSearch] = useState("");
-const [showDeleteModal, setShowDeleteModal] = useState(false);
-const [selectedFile, setSelectedFile] = useState(null);
-const [showUploadPopup, setShowUploadPopup] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [showUploadPopup, setShowUploadPopup] = useState(false);
   const fetchDownloads = async () => {
     try {
       setLoading(true);
@@ -38,34 +42,34 @@ const [showUploadPopup, setShowUploadPopup] = useState(false);
       setLoading(false);
     }
   };
-const handleUpload = async (formData) => {
-  try {
-    const result = await uploadDownloads(formData);
+  const handleUpload = async (formData) => {
+    try {
+      const result = await uploadDownloads(formData);
 
-    if (result.success) {
-      await fetchDownloads();
+      if (result.success) {
+        await fetchDownloads();
+
+        return {
+          success: true,
+          message: result.message,
+        };
+      }
 
       return {
-        success: true,
-        message: result.message,
+        success: false,
+        message: result.message || "Failed to upload files",
+      };
+    } catch (error) {
+      console.error("Upload File Error:", error);
+
+      return {
+        success: false,
+        message:
+          error.response?.data?.message ||
+          "Something went wrong while uploading files.",
       };
     }
-
-    return {
-      success: false,
-      message: result.message || "Failed to upload files",
-    };
-  } catch (error) {
-    console.error("Upload File Error:", error);
-
-    return {
-      success: false,
-      message:
-        error.response?.data?.message ||
-        "Something went wrong while uploading files.",
-    };
-  }
-};
+  };
   useEffect(() => {
     fetchDownloads();
   }, []);
@@ -88,36 +92,36 @@ const handleUpload = async (formData) => {
   const toggleCategory = (categoryId) => {
     setOpenCategory((prev) => (prev === categoryId ? null : categoryId));
   };
-const handleDeleteClick = (file) => {
-  setSelectedFile(file);
-  setShowDeleteModal(true);
-};
+  const handleDeleteClick = (file) => {
+    setSelectedFile(file);
+    setShowDeleteModal(true);
+  };
 
-const handleDelete = async () => {
-  try {
-    setLoading(true);
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
 
-    const result = await deleteDownloadCategory(selectedFile?._id);
+      const result = await deleteDownloadCategory(selectedFile?._id);
 
-    if (result.success) {
-      setShowDeleteModal(false);
-      setSelectedFile(null);
+      if (result.success) {
+        setShowDeleteModal(false);
+        setSelectedFile(null);
 
-      await fetchDownloads();
-    } else {
-      setError(result.message || "Failed to delete file");
+        await fetchDownloads();
+      } else {
+        setError(result.message || "Failed to delete file");
+      }
+    } catch (error) {
+      console.error("Delete Download Error:", error);
+
+      setError(
+        error.response?.data?.message ||
+          "Something went wrong while deleting the file.",
+      );
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error("Delete Download Error:", error);
-
-    setError(
-      error.response?.data?.message ||
-        "Something went wrong while deleting the file."
-    );
-  } finally {
-    setLoading(false);
-  }
-};
+  };
   // ✅ NEW — search filter (category name ya file name se match)
   const filteredDownloads = downloads
     .map((category) => {
@@ -132,7 +136,8 @@ const handleDelete = async () => {
       );
 
       if (matchesCategory) return category;
-      if (matchingFiles.length > 0) return { ...category, files: matchingFiles };
+      if (matchingFiles.length > 0)
+        return { ...category, files: matchingFiles };
       return null;
     })
     .filter(Boolean);
@@ -152,11 +157,11 @@ const handleDelete = async () => {
         </div>
 
         <button
-  className="upload-file-btn"
-  onClick={() => setShowUploadPopup(true)}
->
-  + Upload File
-</button>
+          className="upload-file-btn"
+          onClick={() => setShowUploadPopup(true)}
+        >
+          + Upload File
+        </button>
       </div>
 
       {/* ================= STATS ================= */}
@@ -181,7 +186,6 @@ const handleDelete = async () => {
       {/* ================= ERROR ================= */}
       {error && <div className="error-message">{error}</div>}
 
-  
       <div className="table-card">
         <div className="table-top">
           <div>
@@ -203,10 +207,7 @@ const handleDelete = async () => {
         </div>
 
         {loading ? (
-          <div className="loading-container">
-            <div className="loader"></div>
-            <p>Loading downloads...</p>
-          </div>
+          <CommonLoader />
         ) : filteredDownloads.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">📂</div>
@@ -259,33 +260,36 @@ const handleDelete = async () => {
 
                             {/* ❌ REMOVED: fileUrl and publicId shown as text */}
 
-                        <div className="action-buttons">
-  <button
-    className="view-btn"
-    onClick={() => handleViewFile(file.fileUrl)}
-    title="View File"
-  >
-    👁 
-  </button>
+                            <div className="action-buttons">
+                              <button
+                                className="view-btn"
+                                onClick={() => handleViewFile(file.fileUrl)}
+                                title="View File"
+                              >
+                                👁
+                              </button>
 
-  <button
-    className="download-btn"
-    onClick={() =>
-      handleDownload(file.fileUrl, file.originalName)
-    }
-    title="Download File"
-  >
-    ↓ 
-  </button>
+                              <button
+                                className="download-btn"
+                                onClick={() =>
+                                  handleDownload(
+                                    file.fileUrl,
+                                    file.originalName,
+                                  )
+                                }
+                                title="Download File"
+                              >
+                                ↓
+                              </button>
 
-  <button
-    className="delete-btn"
-    onClick={() => handleDeleteClick(file)}
-    title="Delete File"
-  >
-    🗑 
-  </button>
-</div>
+                              <button
+                                className="delete-btn"
+                                onClick={() => handleDeleteClick(file)}
+                                title="Delete File"
+                              >
+                                🗑
+                              </button>
+                            </div>
                           </div>
                         ))
                       )}
@@ -298,48 +302,43 @@ const handleDelete = async () => {
         )}
       </div>
       {showDeleteModal && (
-  <div className="delete-modal-overlay">
-    <div className="delete-modal">
-      <div className="delete-modal-icon">
-        🗑
-      </div>
+        <div className="delete-modal-overlay">
+          <div className="delete-modal">
+            <div className="delete-modal-icon">🗑</div>
 
-      <h3>Are you sure?</h3>
+            <h3>Are you sure?</h3>
 
-      <p>
-        Are you sure you want to delete{" "}
-        <strong>{selectedFile?.originalName}</strong>?
-      </p>
+            <p>
+              Are you sure you want to delete{" "}
+              <strong>{selectedFile?.originalName}</strong>?
+            </p>
 
-      <div className="delete-modal-actions">
-        <button
-          className="cancel-delete-btn"
-          onClick={() => {
-            setShowDeleteModal(false);
-            setSelectedFile(null);
-          }}
-        >
-          Cancel
-        </button>
+            <div className="delete-modal-actions">
+              <button
+                className="cancel-delete-btn"
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setSelectedFile(null);
+                }}
+              >
+                Cancel
+              </button>
 
-        <button
-          className="confirm-delete-btn"
-          onClick={handleDelete}
-        >
-          Yes, Delete
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+              <button className="confirm-delete-btn" onClick={handleDelete}>
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-<UploadDownloadPopup
-  isOpen={showUploadPopup}
-  onClose={() => setShowUploadPopup(false)}
-  onSuccess={() => {
-    fetchDownloads();
-  }}
-/>
+      <UploadDownloadPopup
+        isOpen={showUploadPopup}
+        onClose={() => setShowUploadPopup(false)}
+        onSuccess={() => {
+          fetchDownloads();
+        }}
+      />
     </div>
   );
 };

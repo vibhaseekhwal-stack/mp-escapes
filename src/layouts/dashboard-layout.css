@@ -1,0 +1,639 @@
+/* =========================================================
+   DASHBOARD LAYOUT
+   Black Sidebar + Clean Light Admin Theme
+   ========================================================= */
+
+.dashboard-layout {
+  min-height: 100vh;
+  background: #f5f7fa;
+  color: #111827;
+}
+
+
+/* =========================================================
+   MAIN AREA
+   ========================================================= */
+
+.dashboard-main {
+  min-height: 100vh;
+  background: #f5f7fa;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.dashboard-header {
+  position: relative;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  box-shadow:
+    0 2px 10px rgba(15, 23, 42, 0.04);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  animation: headerReveal 0.55s ease both;
+}
+
+
+/* =========================================================
+   HEADER INNER
+   ========================================================= */
+
+.dashboard-header-inner {
+  position: relative;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.header-brand {
+  animation: brandFade 0.7s ease both;
+}
+
+.header-brand-label {
+  display: inline-flex;
+  align-items: center;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+
+  color: #2563eb;
+
+  text-shadow:
+    0 0 10px rgba(37, 99, 235, 0.12);
+}
+
+.header-sparkle {
+  color: #c9a227;
+
+  filter:
+    drop-shadow(0 0 5px rgba(201, 162, 39, 0.25));
+
+  animation: sparkleFloat 2.5s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+   ========================================================= */
+
+.header-page-title {
+  color: #111827;
+
+  font-weight: 700;
+
+  letter-spacing: -0.02em;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.header-page-title:hover {
+  color: #2563eb;
+
+  transform: translateX(2px);
+}
+
+
+/* =========================================================
+   MOBILE DIVIDER
+   ========================================================= */
+
+.header-mobile-divider {
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      rgba(37, 99, 235, 0.25),
+      transparent
+    );
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.header-search-wrap {
+  transition: transform 0.25s ease;
+}
+
+.header-search-wrap:focus-within {
+  transform: translateY(-1px);
+}
+
+.header-search {
+  height: 42px;
+  width: 230px;
+
+  padding: 0 16px 0 42px;
+
+  border-radius: 12px;
+
+  color: #111827;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  outline: none;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  transition:
+    width 0.3s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.header-search::placeholder {
+  color: #94a3b8;
+}
+
+.header-search:hover {
+  border-color: #bfdbfe;
+}
+
+.header-search:focus {
+  width: 260px;
+
+  border-color: #2563eb;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.08),
+    0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.header-search-icon {
+  color: #64748b;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.header-search-wrap:focus-within .header-search-icon {
+  color: #2563eb;
+
+  transform:
+    translateY(-50%)
+    scale(1.08);
+}
+
+
+/* =========================================================
+   ICON BUTTONS
+   ========================================================= */
+
+.header-icon-btn {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 12px;
+
+  color: #64748b;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  box-shadow:
+    0 3px 10px rgba(15, 23, 42, 0.04);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.header-icon-btn:hover {
+  color: #2563eb;
+
+  transform: translateY(-2px);
+
+  border-color: #bfdbfe;
+
+  background: #eff6ff;
+
+  box-shadow:
+    0 7px 18px rgba(37, 99, 235, 0.10);
+}
+
+.header-icon-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+
+/* =========================================================
+   NOTIFICATION DOT
+   ========================================================= */
+
+.notification-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #2563eb;
+
+  border: 2px solid #ffffff;
+
+  box-shadow:
+    0 0 0 2px rgba(37, 99, 235, 0.10),
+    0 0 10px rgba(37, 99, 235, 0.35);
+
+  animation: notificationPulse 2s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   HEADER DIVIDER
+   ========================================================= */
+
+.header-divider {
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      #e5e7eb,
+      transparent
+    );
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.profile-btn {
+  padding: 4px 7px 4px 5px;
+
+  border-radius: 13px;
+
+  background: transparent;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.profile-btn:hover {
+  background: #f8fafc;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PROFILE AVATAR
+   ========================================================= */
+
+.profile-avatar {
+  border-radius: 12px;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 0.04em;
+
+  background:
+    linear-gradient(
+      145deg,
+      #111827,
+      #1e3a8a
+    );
+
+  border: 1px solid #bfdbfe;
+
+  box-shadow:
+    0 6px 16px rgba(15, 23, 42, 0.15);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.profile-btn:hover .profile-avatar {
+  transform:
+    rotate(-2deg)
+    scale(1.04);
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.18);
+}
+
+
+/* =========================================================
+   PROFILE TEXT
+   ========================================================= */
+
+.profile-name {
+  color: #111827;
+
+  transition: color 0.2s ease;
+}
+
+.profile-btn:hover .profile-name {
+  color: #2563eb;
+}
+
+.profile-role {
+  color: #64748b;
+}
+
+
+/* =========================================================
+   PROFILE STATUS
+   ========================================================= */
+
+.profile-status-dot {
+  background: #22c55e;
+
+  box-shadow:
+    0 0 8px rgba(34, 197, 94, 0.40);
+
+  animation: statusPulse 2s infinite;
+}
+
+
+/* =========================================================
+   BOTTOM ACCENT LINE
+   ========================================================= */
+
+.header-bottom-line {
+  position: absolute;
+
+  left: 0;
+  bottom: -1px;
+
+  width: 100%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(37, 99, 235, 0.10),
+      #2563eb,
+      rgba(201, 162, 39, 0.45),
+      #2563eb,
+      rgba(37, 99, 235, 0.10),
+      transparent
+    );
+
+  background-size: 200% 100%;
+
+  animation: blueLineMove 5s linear infinite;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.dashboard-content {
+  position: relative;
+
+  min-height: calc(100vh - 70px);
+
+  animation: contentReveal 0.5s ease both;
+}
+
+
+/* =========================================================
+   COMMON ADMIN CARD SUPPORT
+   ========================================================= */
+
+.dashboard-content .card,
+.dashboard-content .dashboard-card,
+.dashboard-content .stat-card {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.dashboard-content .card:hover,
+.dashboard-content .dashboard-card:hover,
+.dashboard-content .stat-card:hover {
+  border-color: #dbeafe;
+
+  box-shadow:
+    0 8px 22px rgba(15, 23, 42, 0.07);
+}
+
+
+/* =========================================================
+   BUTTON SUPPORT
+   ========================================================= */
+
+.dashboard-content .primary-btn {
+  background: #2563eb;
+
+  color: #ffffff;
+
+  border: none;
+
+  border-radius: 9px;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.dashboard-content .primary-btn:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 16px rgba(37, 99, 235, 0.20);
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes headerReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes contentReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes brandFade {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+@keyframes sparkleFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-2px) rotate(8deg);
+  }
+}
+
+
+@keyframes blueLineMove {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+
+@keyframes notificationPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 2px rgba(37, 99, 235, 0.08),
+      0 0 7px rgba(37, 99, 235, 0.25);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 4px rgba(37, 99, 235, 0.06),
+      0 0 14px rgba(37, 99, 235, 0.45);
+  }
+}
+
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .dashboard-header-inner {
+    height: 70px;
+  }
+
+  .header-page-title {
+    font-size: 20px;
+  }
+
+  .header-search {
+    width: 180px;
+  }
+
+  .header-search:focus {
+    width: 200px;
+  }
+
+  .dashboard-content {
+    min-height: calc(100vh - 71px);
+  }
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-header,
+  .dashboard-content,
+  .header-brand,
+  .header-sparkle,
+  .notification-dot,
+  .profile-status-dot,
+  .header-bottom-line {
+    animation: none;
+  }
+
+  .header-search,
+  .header-icon-btn,
+  .profile-btn,
+  .profile-avatar,
+  .header-page-title {
+    transition: none;
+  }
+}

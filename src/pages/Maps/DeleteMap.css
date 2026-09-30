@@ -1,0 +1,332 @@
+/* ================================
+   DELETE MAP OVERLAY
+================================ */
+
+.delete-map-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  box-sizing: border-box;
+
+  background: rgba(15, 15, 15, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  animation: deleteOverlayFade 0.25s ease-out forwards;
+}
+
+
+/* ================================
+   MODAL
+================================ */
+
+.delete-map-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 430px;
+
+  background: #ffffff;
+  border-radius: 18px;
+
+  padding: 32px 30px 28px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.25),
+    0 8px 25px rgba(0, 0, 0, 0.08);
+
+  animation: deleteModalEnter 0.35s cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+
+/* ================================
+   DELETE ICON
+================================ */
+
+.delete-map-icon {
+  width: 68px;
+  height: 68px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fff1f1;
+  border: 8px solid #fff8f8;
+
+  color: #dc3545;
+
+  font-size: 28px;
+
+  box-shadow:
+    0 8px 25px rgba(220, 53, 69, 0.12);
+
+  animation: deleteIconPop 0.45s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    0.1s both;
+}
+
+
+/* ================================
+   HEADING
+================================ */
+
+.delete-map-modal h2 {
+  margin: 0;
+
+  font-size: 22px;
+  font-weight: 650;
+
+  color: #222;
+
+  letter-spacing: -0.2px;
+}
+
+
+/* ================================
+   DESCRIPTION
+================================ */
+
+.delete-map-modal p {
+  margin: 12px auto 0;
+
+  max-width: 350px;
+
+  font-size: 14px;
+  line-height: 1.6;
+
+  color: #666;
+}
+
+.delete-map-modal p strong {
+  color: #222;
+  font-weight: 600;
+}
+
+
+/* ================================
+   WARNING TEXT
+================================ */
+
+.delete-warning {
+  margin-top: 6px !important;
+
+  font-size: 12px !important;
+  color: #a0a0a0 !important;
+}
+
+
+/* ================================
+   ACTION BUTTONS
+================================ */
+
+.delete-map-actions {
+  display: flex;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 28px;
+}
+
+
+/* Common button */
+
+.delete-map-actions button {
+  min-width: 120px;
+
+  height: 42px;
+
+  padding: 0 20px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* ================================
+   CANCEL BUTTON
+================================ */
+
+.delete-cancel-btn {
+  border: 1px solid #dedede;
+
+  background: #ffffff;
+
+  color: #444;
+}
+
+.delete-cancel-btn:hover {
+  background: #f7f7f7;
+
+  border-color: #d2d2d2;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.delete-cancel-btn:active {
+  transform: translateY(0);
+}
+
+
+/* ================================
+   DELETE BUTTON
+================================ */
+
+.delete-confirm-btn {
+  border: 1px solid #dc3545;
+
+  background: #dc3545;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 15px rgba(220, 53, 69, 0.2);
+}
+
+.delete-confirm-btn:hover {
+  background: #c82333;
+
+  border-color: #c82333;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(220, 53, 69, 0.28);
+}
+
+.delete-confirm-btn:active {
+  transform: translateY(0);
+
+  box-shadow:
+    0 3px 8px rgba(220, 53, 69, 0.18);
+}
+
+
+/* ================================
+   OVERLAY ANIMATION
+================================ */
+
+@keyframes deleteOverlayFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* ================================
+   MODAL ENTER ANIMATION
+================================ */
+
+@keyframes deleteModalEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(25px) scale(0.92);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.01);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* ================================
+   ICON POP ANIMATION
+================================ */
+
+@keyframes deleteIconPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(-10deg);
+  }
+
+  70% {
+    opacity: 1;
+    transform: scale(1.08) rotate(2deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+  .delete-map-overlay {
+    padding: 16px;
+  }
+
+  .delete-map-modal {
+    max-width: 100%;
+
+    padding: 28px 20px 24px;
+
+    border-radius: 16px;
+  }
+
+  .delete-map-icon {
+    width: 60px;
+    height: 60px;
+
+    font-size: 25px;
+  }
+
+  .delete-map-modal h2 {
+    font-size: 20px;
+  }
+
+  .delete-map-modal p {
+    font-size: 13px;
+  }
+
+  .delete-map-actions {
+    gap: 10px;
+  }
+
+  .delete-map-actions button {
+    min-width: 0;
+    flex: 1;
+  }
+}

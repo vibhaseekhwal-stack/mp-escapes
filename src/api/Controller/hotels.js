@@ -35,16 +35,22 @@ export const deleteHotel = async (id) => {
   }
 };
 
-export const createHotel = async (formData) => {
-  try {
-    const response = await axiosInstance.post("/hotels", formData, {
+export const createHotel = async (formData) => 
+  {
+  try
+   {
+    const response = await axiosInstance.post("/hotels", formData, 
+      {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
 
     return response.data;
-  } catch (error) {
+  } 
+  catch (error)
+   
+  {
     console.error("Create Hotel API Error:", error);
     throw error;
   }
@@ -58,6 +64,24 @@ export const getAllHotelNames = async () => {
     return response.data;
   } catch (error) {
     console.error("Get All Hotel Names API Error:", error);
+    throw error;
+  }
+};
+
+export const updateHotel = async (id, formData) => 
+  {
+  try {
+    const response = await axiosInstance.put(`/hotels/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } 
+  catch (error) 
+  {
+    console.error("Update Hotel API Error:", error);
     throw error;
   }
 };

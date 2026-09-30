@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import "./Hotels.css";
 import { getAllHotels, deleteHotel } from "../../api/Controller/hotels"; // apne actual controller path ke according change karo
 import ViewHotelDetail from "./ViewHotelDetail";
 import CreateHotel from "./CreateHotel";
+import CommonLoader from "../../components/CommonLoader.jsx";
+import EditHotel from "./EditHotel";
 const Hotels = () => {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedHotelId, setSelectedHotelId] = useState(null);
-const [selectedDeleteHotel, setSelectedDeleteHotel] = useState(null);  
-const [showCreateHotel, setShowCreateHotel] = useState(false);
-// Get All Hotels
+  const [selectedDeleteHotel, setSelectedDeleteHotel] = useState(null);
+  const [showCreateHotel, setShowCreateHotel] = useState(false);
+  const [selectedEditHotel, setSelectedEditHotel] = useState(null);
+  // Get All Hotels
   const fetchHotels = async () => {
     try {
       setLoading(true);
@@ -52,20 +56,20 @@ const [showCreateHotel, setShowCreateHotel] = useState(false);
         </div>
 
         <div className="hotel-header-actions">
-  <button
-  className="create-hotel-btn"
-  onClick={() => setShowCreateHotel(true)}
->
-  Create Hotel
-</button>
-  <div className="hotel-count">
-    Total Hotels: <strong>{hotels.length}</strong>
-  </div>
-</div>
+          <button
+            className="create-hotel-btn"
+            onClick={() => setShowCreateHotel(true)}
+          >
+            Create Hotel
+          </button>
+          <div className="hotel-count">
+            Total Hotels: <strong>{hotels.length}</strong>
+          </div>
+        </div>
       </div>
 
       {/* Loading */}
-      {loading && <div className="hotels-message">Loading hotels...</div>}
+      {loading && <CommonLoader />}
 
       {/* Error */}
       {!loading && error && <div className="hotels-error">{error}</div>}
@@ -143,16 +147,20 @@ const [showCreateHotel, setShowCreateHotel] = useState(false);
                   </td>
                   <td>
                     <div className="hotel-actions">
-                      {/* Edit - Disabled */}
-                      <button className="edit-btn" disabled>
-                        Edit
+                      <button
+                        className="edit-btn"
+                        onClick={() => setSelectedEditHotel(hotel)}
+                        title="Edit Hotel"
+                      >
+                        <FaEdit />
                       </button>
 
                       <button
                         className="delete-btn"
                         onClick={() => setSelectedDeleteHotel(hotel)}
+                        title="Delete Hotel"
                       >
-                        Delete
+                        <FaTrash />
                       </button>
                     </div>
                   </td>
@@ -170,13 +178,22 @@ const [showCreateHotel, setShowCreateHotel] = useState(false);
         />
       )}
       {showCreateHotel && (
-  <CreateHotel
-    onClose={() => setShowCreateHotel(false)}
-    onSuccess={() => {
-      fetchHotels();
-    }}
-  />
-)}
+        <CreateHotel
+          onClose={() => setShowCreateHotel(false)}
+          onSuccess={() => {
+            fetchHotels();
+          }}
+        />
+      )}
+      {selectedEditHotel && (
+        <EditHotel
+          hotel={selectedEditHotel}
+          onClose={() => setSelectedEditHotel(null)}
+          onSuccess={() => {
+            fetchHotels();
+          }}
+        />
+      )}
       {selectedDeleteHotel && (
         <div
           className="delete-modal-overlay"

@@ -1,0 +1,345 @@
+/* =========================================
+   PREMIUM BLUE + YELLOW BUTTONS
+   ========================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 11px 20px;
+  font-size: 15.5px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+
+  color: #ffffff;
+
+  background: linear-gradient(
+    135deg,
+    #1d4ed8 0%,
+    #2563eb 55%,
+    #3b82f6 100%
+  );
+
+  border: 1px solid rgba(245, 158, 11, 0.45);
+
+  box-shadow:
+    0 8px 20px -10px rgba(37, 99, 235, 0.45),
+    0 5px 18px -8px rgba(59, 130, 246, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    filter 0.22s ease;
+}
+
+/* Hover */
+.btn:hover {
+  transform: translateY(-2px);
+
+  color: #ffffff;
+
+  background: linear-gradient(
+    135deg,
+    #1e40af 0%,
+    #2563eb 48%,
+    #3b82f6 100%
+  );
+
+  border-color: rgba(245, 158, 11, 0.85);
+
+  box-shadow:
+    0 12px 28px -10px rgba(37, 99, 235, 0.55),
+    0 8px 24px -8px rgba(59, 130, 246, 0.45),
+    0 0 0 3px rgba(245, 158, 11, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+  filter: brightness(1.05);
+}
+
+/* Click */
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Keyboard focus */
+.btn:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 3px;
+}
+
+
+/* =========================================
+   SMALL / VIEW ALL BUTTON
+   ========================================= */
+
+.btn-sm {
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.btn-ghost {
+  color: #2563eb;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #eff6ff
+  );
+
+  border-color: rgba(37, 99, 235, 0.25);
+
+  box-shadow:
+    0 5px 14px -8px rgba(37, 99, 235, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.btn-ghost:hover {
+  color: #1d4ed8;
+
+  background: linear-gradient(
+    135deg,
+    #eff6ff,
+    #dbeafe
+  );
+
+  border-color: rgba(245, 158, 11, 0.65);
+
+  box-shadow:
+    0 8px 20px -8px rgba(37, 99, 235, 0.35),
+    0 0 0 3px rgba(245, 158, 11, 0.08);
+}
+
+
+/* =========================================
+   DASHBOARD STAT CARDS
+   ========================================= */
+
+.stats-card-grid {
+  margin-top: 4px;
+}
+
+.dashboard-stat-card {
+  position: relative;
+  overflow: hidden;
+
+  min-height: 145px;
+  padding: 4px;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  box-shadow:
+    0 10px 30px -18px rgba(31, 41, 55, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* Blue glow */
+.dashboard-stat-card::before {
+  content: "";
+
+  position: absolute;
+  top: -80px;
+  right: -70px;
+
+  width: 170px;
+  height: 170px;
+
+  border-radius: 50%;
+
+  background: rgba(59, 130, 246, 0.10);
+
+  filter: blur(35px);
+
+  pointer-events: none;
+}
+
+
+/* Yellow subtle glow */
+.dashboard-stat-card::after {
+  content: "";
+
+  position: absolute;
+  bottom: -90px;
+  left: -60px;
+
+  width: 150px;
+  height: 150px;
+
+  border-radius: 50%;
+
+  background: rgba(245, 158, 11, 0.08);
+
+  filter: blur(35px);
+
+  pointer-events: none;
+}
+
+
+/* Hover */
+.dashboard-stat-card:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(37, 99, 235, 0.30);
+
+  box-shadow:
+    0 20px 40px -18px rgba(31, 41, 55, 0.28),
+    0 8px 25px -12px rgba(37, 99, 235, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+
+/* =========================================
+   VIEW ALL BUTTON
+   ========================================= */
+
+.view-all-btn {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 7px 15px;
+
+  border-radius: 9px;
+
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+
+  color: #2563eb;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #eff6ff
+  );
+
+  border: 1px solid rgba(37, 99, 235, 0.25);
+
+  box-shadow:
+    0 5px 15px -9px rgba(37, 99, 235, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.view-all-btn:hover {
+  transform: translateY(-1px);
+
+  color: #1d4ed8;
+
+  background: linear-gradient(
+    135deg,
+    #eff6ff,
+    #dbeafe
+  );
+
+  border-color: rgba(245, 158, 11, 0.65);
+
+  box-shadow:
+    0 8px 20px -8px rgba(37, 99, 235, 0.35),
+    0 0 0 3px rgba(245, 158, 11, 0.08);
+}
+
+
+/* =========================================
+   WELCOME SECTION
+   ========================================= */
+
+.dash-root > .rise h2 {
+  font-size: 34px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+
+  background: linear-gradient(
+    120deg,
+    #1e40af 0%,
+    #2563eb 55%,
+    #f59e0b 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+
+  text-shadow:
+    0 8px 30px rgba(37, 99, 235, 0.10);
+}
+
+.dash-root > .rise p {
+  font-size: 15.5px;
+
+  color: #6b7280;
+
+  letter-spacing: 0.01em;
+}
+
+
+/* =========================================
+   STAT CARD INTERNAL TEXT
+   ========================================= */
+
+.dashboard-stat-card h3,
+.dashboard-stat-card h4,
+.dashboard-stat-card p {
+  position: relative;
+  z-index: 2;
+}
+
+.dashboard-stat-card .text-3xl,
+.dashboard-stat-card .text-4xl {
+  font-size: 30px !important;
+  font-weight: 600;
+
+  color: #1f2937;
+}
+
+.dashboard-stat-card .text-sm {
+  font-size: 13px !important;
+
+  color: #6b7280;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 640px) {
+  .dash-root > .rise h2 {
+    font-size: 28px;
+  }
+
+  .dashboard-stat-card {
+    min-height: 135px;
+  }
+}

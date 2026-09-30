@@ -1,0 +1,749 @@
+/* =========================================
+   EDIT HOTEL - GLASSMORPHISM MODAL
+========================================= */
+
+.edit-hotel-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(37, 99, 235, 0.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(124, 58, 237, 0.18),
+      transparent 35%
+    ),
+    rgba(15, 23, 42, 0.68);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  animation: editOverlayIn 0.25s ease;
+}
+
+
+/* =========================================
+   MAIN MODAL
+========================================= */
+
+.edit-hotel-modal {
+  width: 100%;
+  max-width: 820px;
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+
+  box-shadow:
+    0 35px 80px rgba(0, 0, 0, 0.28),
+    0 10px 30px rgba(37, 99, 235, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  animation: editModalIn 0.3s ease;
+}
+
+
+/* Scrollbar */
+
+.edit-hotel-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.edit-hotel-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.edit-hotel-modal::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: 20px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.edit-hotel-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 22px 26px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+
+/* Header Title */
+
+.edit-hotel-header > div:first-child {
+  position: relative;
+  padding-left: 15px;
+}
+
+.edit-hotel-header > div:first-child::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 2px;
+
+  width: 4px;
+  height: 42px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    180deg,
+    #2563eb,
+    #7c3aed
+  );
+
+  box-shadow:
+    0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+.edit-hotel-header h2 {
+  margin: 0;
+
+  font-size: 23px;
+  font-weight: 700;
+
+  color: #111827;
+
+  letter-spacing: -0.4px;
+}
+
+.edit-hotel-header p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+/* Close Button */
+
+.edit-hotel-close {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(148, 163, 184, 0.25);
+
+  border-radius: 12px;
+
+  background: rgba(248, 250, 252, 0.75);
+
+  color: #64748b;
+
+  font-size: 25px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.edit-hotel-close:hover {
+  background: rgba(254, 226, 226, 0.85);
+
+  color: #dc2626;
+
+  border-color: rgba(248, 113, 113, 0.35);
+
+  transform: rotate(90deg);
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.edit-hotel-error {
+  margin: 18px 26px 0;
+
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  background: rgba(254, 226, 226, 0.7);
+
+  border: 1px solid rgba(248, 113, 113, 0.35);
+
+  color: #dc2626;
+
+  font-size: 13px;
+
+  backdrop-filter: blur(10px);
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.edit-hotel-form {
+  padding: 26px;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+}
+
+.edit-form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.edit-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+
+/* Labels */
+
+.edit-form-group label {
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: #334155;
+
+  letter-spacing: 0.1px;
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.edit-form-group input,
+.edit-form-group textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border-radius: 11px;
+
+  border: 1px solid rgba(148, 163, 184, 0.35);
+
+  outline: none;
+
+  background: rgba(248, 250, 252, 0.72);
+
+  color: #111827;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  box-shadow:
+    inset 0 1px 2px rgba(15, 23, 42, 0.03);
+
+  transition:
+    all 0.25s ease;
+}
+
+.edit-form-group input::placeholder,
+.edit-form-group textarea::placeholder {
+  color: #94a3b8;
+}
+
+
+/* Hover */
+
+.edit-form-group input:hover,
+.edit-form-group textarea:hover {
+  background: rgba(255, 255, 255, 0.9);
+
+  border-color: rgba(148, 163, 184, 0.55);
+}
+
+
+/* Focus */
+
+.edit-form-group input:focus,
+.edit-form-group textarea:focus {
+  background: rgba(255, 255, 255, 0.96);
+
+  border-color: rgba(37, 99, 235, 0.6);
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.08),
+    0 6px 18px rgba(37, 99, 235, 0.07);
+
+  transform: translateY(-1px);
+}
+
+.edit-form-group textarea {
+  resize: vertical;
+
+  min-height: 105px;
+}
+
+
+/* =========================================
+   EXISTING / NEW IMAGES
+========================================= */
+
+.existing-images,
+.new-images {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 14px;
+
+  margin-top: 5px;
+}
+
+.existing-image-item,
+.new-image-item {
+  position: relative;
+
+  width: 112px;
+
+  padding: 5px;
+
+  border-radius: 13px;
+
+  background: rgba(255, 255, 255, 0.65);
+
+  border: 1px solid rgba(226, 232, 240, 0.8);
+
+  box-shadow:
+    0 5px 15px rgba(15, 23, 42, 0.07);
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.existing-image-item:hover,
+.new-image-item:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 12px 25px rgba(15, 23, 42, 0.13);
+}
+
+.existing-image-item img,
+.new-image-item img {
+  display: block;
+
+  width: 102px;
+  height: 76px;
+
+  object-fit: cover;
+
+  border-radius: 9px;
+}
+
+
+/* =========================================
+   REMOVE IMAGE
+========================================= */
+
+.remove-existing-image {
+  position: absolute;
+
+  top: -8px;
+  right: -8px;
+
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid #ffffff;
+
+  border-radius: 50%;
+
+  background: #ef4444;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 10px rgba(239, 68, 68, 0.3);
+
+  transition: all 0.2s ease;
+}
+
+.remove-existing-image:hover {
+  background: #dc2626;
+
+  transform: scale(1.12);
+}
+
+
+/* =========================================
+   IMAGE NAME
+========================================= */
+
+.new-image-item span {
+  display: block;
+
+  margin: 6px 2px 2px;
+
+  font-size: 10px;
+
+  color: #64748b;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================
+   NO IMAGE
+========================================= */
+
+.no-existing-images {
+  padding: 18px;
+
+  text-align: center;
+
+  border-radius: 11px;
+
+  border: 1px dashed rgba(148, 163, 184, 0.5);
+
+  background: rgba(248, 250, 252, 0.65);
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   FILE INPUT
+========================================= */
+
+.edit-form-group input[type="file"] {
+  padding: 9px;
+
+  background: rgba(248, 250, 252, 0.7);
+
+  cursor: pointer;
+}
+
+.edit-form-group input[type="file"]::file-selector-button {
+  margin-right: 12px;
+
+  padding: 8px 14px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: linear-gradient(
+    135deg,
+    #eff6ff,
+    #eef2ff
+  );
+
+  color: #2563eb;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.edit-form-group input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(
+    135deg,
+    #dbeafe,
+    #e0e7ff
+  );
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.edit-hotel-footer {
+  position: sticky;
+
+  bottom: 0;
+
+  z-index: 10;
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 17px 26px;
+
+  background: rgba(255, 255, 255, 0.74);
+
+  backdrop-filter: blur(20px);
+
+  -webkit-backdrop-filter: blur(20px);
+
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+
+/* =========================================
+   CANCEL
+========================================= */
+
+.edit-hotel-cancel-btn {
+  padding: 10px 20px;
+
+  border-radius: 10px;
+
+  border: 1px solid rgba(148, 163, 184, 0.4);
+
+  background: rgba(255, 255, 255, 0.7);
+
+  color: #475569;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.edit-hotel-cancel-btn:hover {
+  background: rgba(248, 250, 252, 1);
+
+  border-color: #94a3b8;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   UPDATE BUTTON
+========================================= */
+
+.edit-hotel-submit-btn {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 11px 23px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #4f46e5,
+    #7c3aed
+  );
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(79, 70, 229, 0.25);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.edit-hotel-submit-btn::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -120%;
+
+  width: 70%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  transition: left 0.55s ease;
+}
+
+.edit-hotel-submit-btn:hover::before {
+  left: 140%;
+}
+
+.edit-hotel-submit-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 28px rgba(79, 70, 229, 0.34);
+}
+
+.edit-hotel-submit-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================
+   DISABLED
+========================================= */
+
+.edit-hotel-cancel-btn:disabled,
+.edit-hotel-submit-btn:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes editOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes editModalIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(25px)
+      scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+  .edit-hotel-overlay {
+    padding: 12px;
+  }
+
+  .edit-hotel-modal {
+    max-height: 94vh;
+
+    border-radius: 17px;
+  }
+
+  .edit-hotel-form {
+    grid-template-columns: 1fr;
+
+    padding: 20px;
+  }
+
+  .edit-form-group.full-width {
+    grid-column: auto;
+  }
+
+  .edit-hotel-header {
+    padding: 18px 20px;
+  }
+
+  .edit-hotel-footer {
+    padding: 15px 20px;
+  }
+}
+
+@media (max-width: 450px) {
+  .edit-hotel-footer {
+    flex-direction: column-reverse;
+  }
+
+  .edit-hotel-cancel-btn,
+  .edit-hotel-submit-btn {
+    width: 100%;
+  }
+}
